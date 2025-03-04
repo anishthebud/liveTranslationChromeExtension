@@ -11,7 +11,7 @@
         "default_icon": "assets/icon.png"
     },
     "permissions": [
-        "storage", "tabs"
+        "storage", "tabs", "tabCapture", "activeTab"
     ],
     "host_permissions": [
         "https://*/*",
