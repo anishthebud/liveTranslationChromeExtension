@@ -14,12 +14,8 @@ recordButton.addEventListener("click", () => {
         { audio: true },
         (stream) => {
             if (!stream) {
-                console.log("no audio is coming out");
                 return;
             }
-
-            console.log("audio is coming: ", stream)
-
             // Gets the audio
             const output = new AudioContext();
             source = output.createMediaStreamSource(stream);
@@ -37,6 +33,5 @@ stopButton.addEventListener("click", () => {
     recordButton.style.display = 'block';
     // Stop recording the audio from the tab
     const tracks = mediaStream.getTracks();
-    console.log(tracks)
     tracks.forEach(track => track.stop())
 })
