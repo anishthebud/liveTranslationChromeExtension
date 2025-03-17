@@ -3,7 +3,7 @@
     "name": "Live Translation",
     "version": "1.0",
     "background": {
-        "service_worker": "background.js",
+        "service_worker": "home.js",
         "type": "module"
     },
     "action": {
@@ -15,6 +15,7 @@
     ],
     "host_permissions": [
         "https://*/*",
-        "https://*/*"
+        "https://*/*",
+        "https://127.0.0.1:5000/"
     ]
 }

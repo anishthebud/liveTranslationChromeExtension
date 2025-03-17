@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@google-cloud/speech": "^6.7.1"
+    "@google-cloud/speech": "^6.7.1",
+    "browserify": "^17.0.1"
   }
 }
