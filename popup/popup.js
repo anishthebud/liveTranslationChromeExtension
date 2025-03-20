@@ -8,8 +8,19 @@ let recorder;
 let intervalId;
 
 async function sendAudio(audio_data) {
-    console.log(audio_data);
-    // const { transcribe } = await chrome.runtime.sendMessage({ audio: stream });
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(audio_data);
+
+        reader.onloadend = () => {
+            const base64 = reader.result;
+
+            chrome.runtime.sendMessage(base64, (response) => {
+                console.log(response);
+                resolve(response);
+            })
+        }
+    })
 }
 
 recordButton.addEventListener("click", () => {
@@ -23,26 +34,31 @@ recordButton.addEventListener("click", () => {
             if (!stream) {
                 return;
             }
-            // Gets the audio
+
+            // Creates the audio context and the stream
             const output = new AudioContext();
             source = output.createMediaStreamSource(stream);
             source.connect(output.destination);
             mediaStream = stream;
 
-            recorder = new MediaRecorder(stream);
+            recorder = new MediaRecorder(stream, {mimeType: "audio/webm"});
 
-            recorder.ondataavailable = event => {
+            recorder.ondataavailable = (event) => {
                 // Handle the recorded audio data (e.g., save it)
-                const audioBlob = event.data;
-                sendAudio(audioBlob);
-                // console.log("Recorded audio:", audioBlob);
+                sendAudio(event.data);
             };
 
-            recorder.start();
-            
+            recorder.onstop = (event) => {
+                if (recorder.state === 'inactive') {
+                    recorder.start();
+                }
+            }
+
             intervalId = setInterval(() => {
-                recorder.requestData();
-            }, 4000)
+                recorder.stop();
+            }, 2000)
+
+            recorder.start();
         }
     )
 })

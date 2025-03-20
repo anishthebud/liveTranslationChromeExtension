@@ -3,7 +3,7 @@
     "name": "Live Translation",
     "version": "1.0",
     "background": {
-        "service_worker": "home.js",
+        "service_worker": "background.js",
         "type": "module"
     },
     "action": {
@@ -11,11 +11,14 @@
         "default_icon": "assets/icon.png"
     },
     "permissions": [
-        "storage", "tabs", "tabCapture", "activeTab"
+        "storage", 
+        "tabs", 
+        "tabCapture", 
+        "activeTab"
     ],
     "host_permissions": [
         "https://*/*",
         "https://*/*",
-        "https://127.0.0.1:5000/"
+        "http://127.0.0.1:5000/"
     ]
 }
